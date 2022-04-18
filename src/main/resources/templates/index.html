@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inicio</title>
+</head>
+<body>
+	<h1>Inicio</h1>
+	<a th:href="@{/propietario/agregar}">Crear propietario</a>
+	<a th:href="@{/inspector/agregar}">Crear inspector</a>
+	<a th:href="@{/automovil/agregar}">Crear automóvil</a>
+	<a th:href="@{/inspeccion/agregar}">Crear inspección</a>
+	<br>
+	<h4>Propietarios:</h4>
+	<div th:if="${propietarios != null and !propietarios.empty}">
+		<table border=1>
+			<tr>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Exento</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="propietario : ${propietarios}">
+				<td th:text="${propietario.dni}">Mostrar DNI</td>
+				<td th:text="${propietario.nombre}">Mostrar nombre</td>
+				<td th:text="${propietario.apellido}">Mostrar apellido</td>
+				<td th:text="${propietario.exento}">Mostrar exento</td>
+				<td><a th:href="@{/propietario/editar/} + ${propietario.dni}">Editar</a></td>
+				<td><a th:href="@{/propietario/eliminar/} + ${propietario.dni}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${propietarios == null or propietarios.empty}">
+	La lista de propietarios esta vacia.
+	</div>
+	<h4>Inspectores:</h4>
+	<div th:if="${inspectores != null and !inspectores.empty}">
+		<table border=1>
+			<tr>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Número</th>
+				<th>Salario</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="inspector : ${inspectores}">
+				<td th:text="${inspector.dni}">Mostrar DNI</td>
+				<td th:text="${inspector.nombre}">Mostrar nombre</td>
+				<td th:text="${inspector.apellido}">Mostrar apellido</td>
+				<td th:text="${inspector.numero}">Mostrar numero</td>
+				<td th:text="${inspector.salario}">Mostrar salario</td>
+				<td><a th:href="@{/inspector/editar/} + ${inspector.dni}">Editar</a></td>
+				<td><a th:href="@{/inspector/eliminar/} + ${inspector.dni}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${inspectores == null or inspectores.empty}">
+	La lista de inspectores esta vacia.
+	</div>
+	<h4>Automóviles:</h4>
+	<div th:if="${autos != null and !autos.empty}">
+		<table border=1>
+			<tr>
+				<th>Dominio</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>Tipo</th>
+				<th>DNI propietario</th>
+				<th>Estado inspección</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="auto : ${autos}">
+				<td th:text="${auto.dominio}">Mostrar dominio</td>
+				<td th:text="${auto.marca}">Mostrar marca</td>
+				<td th:text="${auto.modelo}">Mostrar modelo</td>
+				<td th:text="${auto.tipo}">Mostrar tipo</td>
+				<td th:text="${auto.dniPropietario}">Mostrar DNI propietario</td>
+				<td th:text="${auto.estadoInspeccion}">Mostrar estado inspeccion</td>
+				<td><a th:href="@{/automovil/editar/} + ${auto.dominio}">Editar</a></td>
+				<td><a th:href="@{/automovil/eliminar/} + ${auto.dominio}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${autos == null or autos.empty}">
+	La lista de autos esta vacia.
+	</div>
+	<h4>Inspecciones:</h4>
+	<div th:if="${inspecciones != null and !inspecciones.empty}">
+		<table border=1>
+			<tr>
+				<th>Número</th>
+				<th>Dominio</th>
+				<th>DNI inspector</th>
+				<th>Estado</th>
+				<th>Fecha</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="inspeccion : ${inspecciones}">
+				<td th:text="${inspeccion.numero}">Mostrar numero</td>
+				<td th:text="${inspeccion.dominio}">Mostrar dominio</td>
+				<td th:text="${inspeccion.dniInspector}">Mostrar DNI inspector</td>
+				<td th:text="${inspeccion.estado}">Mostrar estado</td>
+				<td th:text="${inspeccion.fecha}">Mostrar fecha</td>
+				<td><a th:href="@{/inspeccion/editar/} + ${inspeccion.numero}">Editar</a></td>
+				<td><a th:href="@{/inspeccion/eliminar/} + ${inspeccion.numero}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${inspecciones == null or inspecciones.empty}">
+	La lista de inspecciones esta vacia.
+	</div>
+	<h4>Tipos:</h4>
+	<div th:if="${tipos != null and !tipos.empty}">
+		<table border=1>
+			<tr>
+				<th>Id</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>Tipo</th>
+			</tr>
+			<tr th:each="tipo : ${tipos}">
+				<td th:text="${tipo.idTipo}">Mostrar id</td>
+				<td th:text="${tipo.nombreMarca}">Mostrar marca</td>
+				<td th:text="${tipo.nombreModelo}">Mostrar modelo</td>
+				<td th:text="${tipo.nombreTipo}">Mostrar tipo</td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${tipos == null or tipos.empty}">
+	La lista de tipos esta vacia.
+	</div>
+</body>
+</html>

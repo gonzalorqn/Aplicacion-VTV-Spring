@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Agregar inspección</title>
+</head>
+<body>
+	<h1>Agregar inspección</h1>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<form th:action="@{/inspeccion/guardar}" method="post" th:object="${inspeccion}">
+		<label for="dominio">Dominio:</label>
+		<input type="text" name="dominio" th:field="*{dominio}">
+		<span th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}">Error dominio</span>
+		<br>
+		<label for="dniInspector">DNI inspector:</label>
+		<input type="text" name="dniInspector" th:field="*{dniInspector}">
+		<span th:if="${#fields.hasErrors('dniInspector')}" th:errors="*{dniInspector}">Error DNI inspector</span>
+		<br>
+		<label for="estado">Estado:</label>
+		<select name="estado" id="estado" th:field="*{estado}">
+			<option value="apto">Apto</option>
+			<option value="condicional">Condicional</option>
+			<option value="rechazado">Rechazado</option>
+		</select>
+		<br>
+		<label for="fecha">Fecha:</label>
+		<input type="date" id="fecha" name="fecha" th:field="*{fecha}">
+		<span th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">Error fecha</span>
+		<br>
+		<br>
+		<input type="submit" name="guardar" value="Guardar">
+	</form>
+</body>
+</html>

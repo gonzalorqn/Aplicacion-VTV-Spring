@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Eliminar automóvil</title>
+</head>
+<body>
+	<h1>Eliminar automóvil</h1>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<form th:action="@{/automovil/borrar}" method="post" th:object="${automovil}">
+		<input type="hidden" name="dominio" th:field="*{dominio}">
+		<label for="dominio">Dominio:</label>
+		<input type="text" name="dominio" th:field="*{dominio}" disabled>
+		<br>
+		<label for="marca">Marca:</label>
+		<input type="text" name="marca" th:field="*{marca}" disabled>
+		<br>
+		<label for="modelo">Modelo:</label>
+		<input type="text" name="modelo" th:field="*{modelo}" disabled>
+		<br>
+		<label for="tipo">Tipo:</label>
+		<input type="text" name="tipo" th:field="*{tipo}" disabled>
+		<br>
+		<label for="dniPropietario">DNI propietario:</label>
+		<input type="text" name="dniPropietario" th:field="*{dniPropietario}" disabled>
+		<br>
+		<label for="estadoInspeccion">Estado inspeccion:</label>
+		<select name="estadoInspeccion" id="estadoInspeccion" th:field="*{estadoInspeccion}" disabled>
+			<option value="apto">Apto</option>
+			<option value="condicional">Condicional</option>
+			<option value="rechazado">Rechazado</option>
+		</select>
+		<br>
+		<br>
+		<input type="submit" name="eliminar" value="Eliminar">
+	</form>
+</body>
+</html>

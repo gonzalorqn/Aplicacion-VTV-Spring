@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Agregar propietario</title>
+</head>
+<body>
+	<h1>Agregar propietario</h1>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<form th:action="@{/propietario/guardar}" method="post" th:object="${propietario}">
+		<label for="nombre">Nombre:</label>
+		<input type="text" name="nombre" th:field="*{nombre}">
+		<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error nombre</span>
+		<br>
+		<label for="apellido">Apellido:</label>
+		<input type="text" name="apellido" th:field="*{apellido}">
+		<span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error apellido</span>
+		<br>
+		<label for="dni">DNI:</label>
+		<input type="text" name="dni" th:field="*{dni}">
+		<span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Error DNI</span>
+		<br>
+		<label for="exento">Exento:</label>
+		<input type="checkbox" name="exento" th:field="*{exento}">
+		<br>
+		<br>
+		<input type="submit" name="guardar" value="Guardar">
+	</form>
+</body>
+</html>

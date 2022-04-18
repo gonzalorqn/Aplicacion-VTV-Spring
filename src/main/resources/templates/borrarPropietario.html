@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Eliminar propietario</title>
+</head>
+<body>
+	<h1>Eliminar propietario</h1>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<form th:action="@{/propietario/borrar}" method="post" th:object="${propietario}">
+		<input type="hidden" name="dni" th:field="*{dni}">
+		<label for="nombre">Nombre:</label>
+		<input type="text" name="nombre" th:field="*{nombre}" disabled>
+		<br>
+		<label for="apellido">Apellido:</label>
+		<input type="text" name="apellido" th:field="*{apellido}" disabled>
+		<br>
+		<label for="dni">DNI: </label>
+		<input type="text" name="dni" th:field="*{dni}" disabled>
+		<br>
+		<label for="exento">Exento:</label>
+		<input type="checkbox" name="exento" th:field="*{exento}" disabled>
+		<br>
+		<br>
+		<input type="submit" name="eliminar" value="Eliminar">
+	</form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modificar automóvil</title>
+</head>
+<body>
+	<h1>Modificar automóvil</h1>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<form th:action="@{/automovil/modificar}" method="post" th:object="${automovil}">
+		<input type="hidden" name="dominio" th:field="*{dominio}">
+		<input type="hidden" name="dniPropietario" th:field="*{dniPropietario}">
+		<label for="dominio">Dominio:</label>
+		<input type="text" name="dominio" th:field="*{dominio}" disabled>
+		<br>
+		<label for="marca">Marca:</label>
+		<input type="text" name="marca" th:field="*{marca}">
+		<span th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}">Error marca</span>
+		<br>
+		<label for="modelo">Modelo:</label>
+		<input type="text" name="modelo" th:field="*{modelo}">
+		<span th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}">Error modelo</span>
+		<br>
+		<label for="tipo">Tipo:</label>
+		<input type="text" name="tipo" th:field="*{tipo}">
+		<span th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">Error tipo</span>
+		<br>
+		<label for="dniPropietario">DNI propietario:</label>
+		<input type="text" name="dniPropietario" th:field="*{dniPropietario}" disabled>
+		<br>
+		<label for="estadoInspeccion">Estado inspeccion:</label>
+		<select name="estadoInspeccion" id="estadoInspeccion" th:field="*{estadoInspeccion}">
+			<option value="apto">Apto</option>
+			<option value="condicional">Condicional</option>
+			<option value="rechazado">Rechazado</option>
+		</select>
+		<br>
+		<br>
+		<input type="submit" name="modificar" value="Modificar">
+	</form>
+</body>
+</html>
