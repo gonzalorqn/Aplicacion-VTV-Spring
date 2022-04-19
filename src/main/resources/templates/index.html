@@ -126,8 +126,8 @@
 			</tr>
 			<tr th:each="tipo : ${tipos}">
 				<td th:text="${tipo.idTipo}">Mostrar id</td>
-				<td th:text="${tipo.nombreMarca}">Mostrar marca</td>
-				<td th:text="${tipo.nombreModelo}">Mostrar modelo</td>
+				<td th:text="${tipo.modelo.marca.nombreMarca}">Mostrar marca</td>
+				<td th:text="${tipo.modelo.nombreModelo}">Mostrar modelo</td>
 				<td th:text="${tipo.nombreTipo}">Mostrar tipo</td>
 			</tr>
 		</table>

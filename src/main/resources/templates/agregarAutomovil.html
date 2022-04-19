@@ -15,12 +15,14 @@
 		<span th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}">Error dominio</span>
 		<br>
 		<label for="marca">Marca:</label>
-		<input type="text" name="marca" th:field="*{marca}">
-		<span th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}">Error marca</span>
+		<select name="marca" id="marca" th:field="*{marca}">
+			<option th:each="marca : ${marcas}" th:value="${marca.idMarca}" th:text="${marca.nombreMarca}"></option>
+		</select>
 		<br>
 		<label for="modelo">Modelo:</label>
-		<input type="text" name="modelo" th:field="*{modelo}">
-		<span th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}">Error modelo</span>
+		<select name="modelo" id="modelo" th:field="*{modelo}">
+			<option th:each="modelo : ${modelos}" th:if="${modelo.marca.idMarca == 1}" th:value="${modelo.idModelo}" th:text="${modelo.nombreModelo}"></option>
+		</select>
 		<br>
 		<label for="tipo">Tipo:</label>
 		<input type="text" name="tipo" th:field="*{tipo}">

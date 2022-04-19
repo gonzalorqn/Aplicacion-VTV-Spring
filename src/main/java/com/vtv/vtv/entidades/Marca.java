@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "marcas", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_marca" }) })
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Marca {
+public class Marca {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_marca")
 	private int idMarca;
 	

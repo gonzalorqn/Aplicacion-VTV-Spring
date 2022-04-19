@@ -4,22 +4,26 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "modelos", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_modelo" }) })
-@Inheritance(strategy = InheritanceType.JOINED)
-@PrimaryKeyJoinColumn(referencedColumnName = "id_marca")
-public abstract class Modelo extends Marca {
+public class Modelo {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_modelo")
 	private int idModelo;
 	
 	@Column(name = "nombre_modelo")
 	private String nombreModelo;
 	
+	@ManyToOne
+	@JoinColumn(name="id_marca")
+	private Marca marca;
+	
 	public Modelo() { }
 	
-	public Modelo(int idMarca, String nombreMarca, int idModelo, String nombreModelo) {
-		super(idMarca, nombreMarca);
+	public Modelo(int idModelo, String nombreModelo, Marca marca) {
 		this.idModelo = idModelo;
 		this.nombreModelo = nombreModelo;
+		this.marca = marca;
 	}
 
 	public int getIdModelo() {
@@ -36,5 +40,13 @@ public abstract class Modelo extends Marca {
 
 	public void setNombreModelo(String nombreModelo) {
 		this.nombreModelo = nombreModelo;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 }
