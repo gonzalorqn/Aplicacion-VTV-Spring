@@ -8,22 +8,22 @@ import javax.validation.constraints.NotEmpty;
 @PrimaryKeyJoinColumn(referencedColumnName = "dominio")
 public class Automovil extends Vehiculo {
 	
-	@Column(name = "tipo")
-	@NotEmpty(message="Ingrese el tipo por favor.")
-	private String tipo;
+	@ManyToOne
+	@JoinColumn(name="id_tipo")
+	private Tipo tipo;
 	
 	public Automovil() { }
 	
-	public Automovil(String dominio, String marca, String modelo, String dniPropietario, String estadoInspeccion, String tipo) {
-		super(dominio, marca, modelo, dniPropietario, estadoInspeccion);
+	public Automovil(String dominio, String dniPropietario, String estadoInspeccion, Tipo tipo) {
+		super(dominio, dniPropietario, estadoInspeccion);
 		this.tipo = tipo;
 	}
 
-	public String getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 }

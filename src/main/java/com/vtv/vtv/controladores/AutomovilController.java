@@ -13,6 +13,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.google.gson.Gson;
 
 import com.vtv.vtv.entidades.Automovil;
 import com.vtv.vtv.entidades.Propietario;
@@ -50,6 +53,13 @@ public class AutomovilController {
 		var tipos = tipoService.listarTipos();
 		model.addAttribute("tipos", tipos);
 		return "agregarAutomovil";
+	}
+	
+	@ResponseBody
+	@GetMapping("/json/modelos")
+	public String jsonModelosPorMarca(@RequestParam("idMarca") int idMarca) {
+		Gson gson = new Gson();
+		return gson.toJson(modeloService.listarModelosPorMarca(idMarca));
 	}
 	
 	@PostMapping("/guardar")

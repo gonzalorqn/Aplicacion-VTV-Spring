@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vtv.vtv.dao.ModeloDao;
+import com.vtv.vtv.entidades.Marca;
 import com.vtv.vtv.entidades.Modelo;
 
 @Service
@@ -18,6 +19,13 @@ public class ModeloService {
 	@Transactional(readOnly = true)
 	public List<Modelo> listarModelos(){
 		return (List<Modelo>) modeloDao.findAll();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Modelo> listarModelosPorMarca(int idMarca){
+		Marca marca = new Marca();
+		marca.setIdMarca(idMarca);
+		return (List<Modelo>) modeloDao.findByMarca(marca);
 	}
 	
 	@Transactional(readOnly = true)

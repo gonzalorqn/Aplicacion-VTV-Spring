@@ -15,18 +15,19 @@
 		<span th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}">Error dominio</span>
 		<br>
 		<label for="marca">Marca:</label>
-		<select name="marca" id="marca" th:field="*{marca}">
+		<select name="marca" id="marca" th:field="*{tipo.modelo.marca.idMarca}">
 			<option th:each="marca : ${marcas}" th:value="${marca.idMarca}" th:text="${marca.nombreMarca}"></option>
 		</select>
 		<br>
 		<label for="modelo">Modelo:</label>
-		<select name="modelo" id="modelo" th:field="*{modelo}">
-			<option th:each="modelo : ${modelos}" th:if="${modelo.marca.idMarca == 1}" th:value="${modelo.idModelo}" th:text="${modelo.nombreModelo}"></option>
+		<select name="modelo" id="modelo" th:field="*{tipo.modelo.idModelo}">
+			<option th:each="modelo : ${modelos}" th:if="${modelo.marca.idMarca == automovil.tipo.modelo.marca.idMarca}" th:value="${modelo.idModelo}" th:text="${modelo.nombreModelo}"></option>
 		</select>
 		<br>
 		<label for="tipo">Tipo:</label>
-		<input type="text" name="tipo" th:field="*{tipo}">
-		<span th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">Error tipo</span>
+		<select name="tipo" id="tipo" th:field="*{tipo.idTipo}">
+			<option th:each="tipo : ${tipos}" th:if="${tipo.modelo.idModelo == automovil.tipo.modelo.idModelo}" th:value="${tipo.idTipo}" th:text="${tipo.nombreTipo}"></option>
+		</select>
 		<br>
 		<label for="dniPropietario">DNI propietario:</label>
 		<input type="text" name="dniPropietario" th:field="*{dniPropietario}">
@@ -42,5 +43,49 @@
 		<br>
 		<input type="submit" name="guardar" value="Guardar">
 	</form>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" >
+
+$(document).ready(function() {
+		$("#marca").on("change", function() {
+		var idMarca = $(this).val();
+        $("#modelo").attr("disabled", true);
+        $("#tipo").attr("disabled", true);
+		$.ajax({
+			type: "GET",
+			url: "[[@{/automovil/json/modelos}]]?idMarca=" + idMarca,
+			success: function(result) {
+				var result = JSON.parse(result);
+				var opciones = "";
+				for (var i = 0; i < result.length; i++)
+                    opciones += '<option value="' + result[i].idModelo + '">' + result[i].nombreModelo + '</option>'
+                $("#modelo").html("opciones");
+                $("#modelo").attr("disabled", false);
+				$("#modelo").trigger("change");
+			}
+		});
+	});
+		
+	$("#modelo").on("change", function() {
+	var idModelo = $(this).val();
+        $("#tipo").attr("disabled", true);
+        $.ajax({
+            type: "GET",
+            url: "[[@{/automovil/json/tipos}]]?idModelo=" + idModelo,
+            success: function(result) {
+                var result = JSON.parse(result);
+                var opciones = "";
+                for (var i = 0; i < result.length; i++)
+                    opciones += '<option value="' + result[i].idTipo + '">' + result[i].nombreTipo + '</option>'
+                $("#tipo").html(opciones);
+                $("#tipo").attr("disabled", false);
+            }
+        });
+    });
+	$("#modelo").attr("disabled", true);
+	$("#tipo").attr("disabled", true);
+	$("#marca").trigger("change");
+});
+</script>-->
 </body>
 </html>

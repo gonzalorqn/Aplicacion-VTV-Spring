@@ -76,9 +76,9 @@
 			</tr>
 			<tr th:each="auto : ${autos}">
 				<td th:text="${auto.dominio}">Mostrar dominio</td>
-				<td th:text="${auto.marca}">Mostrar marca</td>
-				<td th:text="${auto.modelo}">Mostrar modelo</td>
-				<td th:text="${auto.tipo}">Mostrar tipo</td>
+				<td th:text="${auto.tipo.modelo.marca.nombreMarca}">Mostrar marca</td>
+				<td th:text="${auto.tipo.modelo.nombreModelo}">Mostrar modelo</td>
+				<td th:text="${auto.tipo.nombreTipo}">Mostrar tipo</td>
 				<td th:text="${auto.dniPropietario}">Mostrar DNI propietario</td>
 				<td th:text="${auto.estadoInspeccion}">Mostrar estado inspeccion</td>
 				<td><a th:href="@{/automovil/editar/} + ${auto.dominio}">Editar</a></td>

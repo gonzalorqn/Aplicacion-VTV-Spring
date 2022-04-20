@@ -11,14 +11,6 @@ public abstract class Vehiculo {
 	@Id
 	private String dominio;
 	
-	@Column(name = "marca")
-	@NotEmpty(message="Ingrese la marca por favor.")
-	private String marca;
-	
-	@Column(name = "modelo")
-	@NotEmpty(message="Ingrese el modelo por favor.")
-	private String modelo;
-	
 	@Column(name = "dni_propietario")
     private String dniPropietario;
 	
@@ -27,11 +19,9 @@ public abstract class Vehiculo {
 	
 	public Vehiculo() { }
 	
-	public Vehiculo(String dominio, String marca, String modelo, String dniPropietario, String estadoInspeccion) {
+	public Vehiculo(String dominio, String dniPropietario, String estadoInspeccion) {
 		super();
 		this.dominio = dominio;
-		this.marca = marca;
-		this.modelo = modelo;
 		this.dniPropietario = dniPropietario;
 		this.estadoInspeccion = estadoInspeccion;
 	}
@@ -42,22 +32,6 @@ public abstract class Vehiculo {
 
 	public void setDominio(String dominio) {
 		this.dominio = dominio;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
 	}
 
 	public String getDniPropietario() {
