@@ -44,6 +44,13 @@ public class AutomovilController {
 	@Autowired
 	private MarcaService marcaService;
 	
+	@GetMapping("/")
+	public String inicio(Model model) {
+		var autos = automovilService.listarAutomoviles();
+		model.addAttribute("autos", autos);
+		return "automoviles/automoviles";
+	}
+	
 	@GetMapping("/agregar")
 	public String agregarAutomovil(Automovil automovil, Model model) {
 		var marcas = marcaService.listarMarcas();
@@ -52,7 +59,7 @@ public class AutomovilController {
 		model.addAttribute("modelos", modelos);
 		var tipos = tipoService.listarTipos();
 		model.addAttribute("tipos", tipos);
-		return "agregarAutomovil";
+		return "automoviles/agregarAutomovil";
 	}
 	
 	@ResponseBody
@@ -69,27 +76,29 @@ public class AutomovilController {
 		int dniAux;
 		Propietario propietario = new Propietario();
 		propietario.setDni(dni);
-		var p = propietarioService.encontrarPropietario(propietario);
+		var p = propietarioService.encontrarPropietario(propietario.getDni());
 		var a = automovilService.encontrarAutomovil(automovil);
-		if(p == null) {
-			FieldError error = new FieldError("automovil", "dniPropietario", "No existe ningún propietario con ese DNI.");
-			errores.addError(error);
-		}
 		if(dni.length()>8 || dni.length()<7) {
 			FieldError error = new FieldError("automovil", "dniPropietario", "Los caracteres del dni deben ser 7 como minimo y 8 como maximo.");
 			errores.addError(error);
 		}
-		try {
-			dniAux = Integer.parseInt(dni);
-			if (dniAux == 0) {
-				FieldError error = new FieldError("automovil", "dniPropietario", "El dni de la persona no puede ser 0.");
+		else {
+			try {
+				dniAux = Integer.parseInt(dni);
+				if (dniAux == 0) {
+					FieldError error = new FieldError("automovil", "dniPropietario", "El dni de la persona no puede ser 0.");
+					errores.addError(error);
+				}
+				else if(p == null) {
+					FieldError error = new FieldError("automovil", "dniPropietario", "No existe ningún propietario con ese DNI.");
+					errores.addError(error);
+				}
+			} catch (NumberFormatException e) {
+				FieldError error = new FieldError("automovil", "dniPropietario", "Los caracteres del dni deben ser numeros.");
 				errores.addError(error);
 			}
 		}
-		catch (NumberFormatException e) {
-			FieldError error = new FieldError("automovil", "dniPropietario", "Los caracteres del dni deben ser numeros.");
-			errores.addError(error);
-		}
+		
 		
 		if(a != null) {
 			FieldError error = new FieldError("automovil", "dominio", "Ya existe un automóvil con ese dominio.");
@@ -123,38 +132,38 @@ public class AutomovilController {
 			model.addAttribute("modelos", modelos);
 			var tipos = tipoService.listarTipos();
 			model.addAttribute("tipos", tipos);
-			return "agregarAutomovil";
+			return "automoviles/agregarAutomovil";
 		}
 		automovilService.guardar(automovil);
-		return "redirect:/";
+		return "redirect:/automovil/";
 	}
 	
 	@GetMapping("/editar/{dominio}")
 	public String editarAutomovil(Automovil automovil, Model model) {
 		automovil = automovilService.encontrarAutomovil(automovil);
 		model.addAttribute("automovil", automovil);
-		return "modificarAutomovil";
+		return "automoviles/modificarAutomovil";
 	}
 	
 	@PostMapping("/modificar")
 	public String modificarAutomovil(@Valid Automovil automovil, BindingResult errores) {
 		if(errores.hasErrors()) {
-			return "modificarAutomovil";
+			return "automoviles/modificarAutomovil";
 		}
 		automovilService.guardar(automovil);
-		return "redirect:/";
+		return "redirect:/automovil/";
 	}
 	
 	@GetMapping("/eliminar/{dominio}")
 	public String eliminarAutomovil(Automovil automovil, Model model) {
 		automovil = automovilService.encontrarAutomovil(automovil);
 		model.addAttribute("automovil", automovil);
-		return "borrarAutomovil";
+		return "automoviles/borrarAutomovil";
 	}
 	
 	@PostMapping("/borrar")
 	public String borrarAutomovil(Automovil automovil) {
 		automovilService.eliminar(automovil);
-		return "redirect:/";
+		return "redirect:/automovil/";
 	}
 }

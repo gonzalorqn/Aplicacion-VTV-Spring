@@ -34,9 +34,16 @@ public class InspeccionController {
 	@Autowired
 	private AutomovilService automovilService;
 
+	@GetMapping("/")
+	public String inicio(Model model) {
+		var inspecciones = inspeccionService.listarInspecciones();
+		model.addAttribute("inspecciones", inspecciones);
+		return "inspecciones/inspecciones";
+	}
+	
 	@GetMapping("/agregar")
 	public String agregarInspeccion(Inspeccion inspeccion) {
-		return "agregarInspeccion";
+		return "inspecciones/agregarInspeccion";
 	}
 	
 	@PostMapping("/guardar")
@@ -50,63 +57,71 @@ public class InspeccionController {
 		automovil.setDominio(dominio);
 		var i = inspectorService.encontrarInspector(inspector);
 		var a = automovilService.encontrarAutomovil(automovil);
-		if(i == null) {
-			FieldError error = new FieldError("inspeccion", "dniInspector", "No existe ningún inspector con ese DNI.");
-			errores.addError(error);
-		}
 		if(dni.length()>8 || dni.length()<7) {
 			FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser 7 como minimo y 8 como maximo.");
 			errores.addError(error);
 		}
-		try {
-			dniAux = Integer.parseInt(dni);
-			if (dniAux == 0) {
-				FieldError error = new FieldError("inspeccion", "dniInspector", "El dni de la persona no puede ser 0.");
+		else {
+			try {
+				dniAux = Integer.parseInt(dni);
+				if (dniAux == 0) {
+					FieldError error = new FieldError("inspeccion", "dniInspector", "El dni de la persona no puede ser 0.");
+					errores.addError(error);
+				}
+				else if(i == null) {
+					FieldError error = new FieldError("inspeccion", "dniInspector", "No existe ningún inspector con ese DNI.");
+					errores.addError(error);
+				}
+			}
+			catch (NumberFormatException e) {
+				FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser numeros.");
 				errores.addError(error);
 			}
 		}
-		catch (NumberFormatException e) {
-			FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser numeros.");
-			errores.addError(error);
-		}
 		
-		if(a == null) {
-			FieldError error = new FieldError("inspeccion", "dominio", "No existe ningún automóvil con ese dominio.");
-			errores.addError(error);
-		}
 		if(!(dominio.length()==7 || dominio.length()==9)) {
 			FieldError error = new FieldError("inspeccion", "dominio", "El dominio solo puede tener 7 o 9 caracteres.");
 			errores.addError(error);
 		}
-		if(dominio.length() == 7) {
-			Pattern pattern = Pattern.compile("[A-Z][A-Z][A-Z] [0-9][0-9][0-9]");
-		    Matcher matcher = pattern.matcher(dominio);
-		    if(!matcher.find()) {
-		    	FieldError error = new FieldError("inspeccion", "dominio", "El dominio debe seguir el formato correcto. Ejemplo: AAA 111");
-				errores.addError(error);
-		    }
-		}
-		if(dominio.length() == 9) {
-			Pattern pattern = Pattern.compile("[A-Z][A-Z] [0-9][0-9][0-9] [A-Z][A-Z]");
-		    Matcher matcher = pattern.matcher(dominio);
-		    if(!matcher.find()) {
-		    	FieldError error = new FieldError("inspeccion", "dominio", "El dominio debe seguir el formato correcto. Ejemplo: AA 111 AA");
-				errores.addError(error);
-		    }
+		else {
+			if(dominio.length() == 7) {
+				Pattern pattern = Pattern.compile("[A-Z][A-Z][A-Z] [0-9][0-9][0-9]");
+			    Matcher matcher = pattern.matcher(dominio);
+			    if(!matcher.find()) {
+			    	FieldError error = new FieldError("inspeccion", "dominio", "El dominio debe seguir el formato correcto. Ejemplo: AAA 111");
+					errores.addError(error);
+			    }
+			    else if(a == null) {
+					FieldError error = new FieldError("inspeccion", "dominio", "No existe ningún automóvil con ese dominio.");
+					errores.addError(error);
+				}
+			}
+			if(dominio.length() == 9) {
+				Pattern pattern = Pattern.compile("[A-Z][A-Z] [0-9][0-9][0-9] [A-Z][A-Z]");
+			    Matcher matcher = pattern.matcher(dominio);
+			    if(!matcher.find()) {
+			    	FieldError error = new FieldError("inspeccion", "dominio", "El dominio debe seguir el formato correcto. Ejemplo: AA 111 AA");
+					errores.addError(error);
+			    }
+			    else if(a == null) {
+					FieldError error = new FieldError("inspeccion", "dominio", "No existe ningún automóvil con ese dominio.");
+					errores.addError(error);
+				}
+			}
 		}
 		
 		if(errores.hasErrors()) {
-			return "agregarInspeccion";
+			return "inspecciones/agregarInspeccion";
 		}
 		inspeccionService.guardar(inspeccion);
-		return "redirect:/";
+		return "redirect:/inspeccion/";
 	}
 	
 	@GetMapping("/editar/{numero}")
 	public String editarInspeccion(Inspeccion inspeccion, Model model) {
-		inspeccion = inspeccionService.encontrarInspeccion(inspeccion);
+		inspeccion = inspeccionService.encontrarInspeccion(inspeccion.getNumero());
 		model.addAttribute("inspeccion", inspeccion);
-		return "modificarInspeccion";
+		return "inspecciones/modificarInspeccion";
 	}
 	
 	@PostMapping("/modificar")
@@ -116,43 +131,45 @@ public class InspeccionController {
 		Inspector inspector = new Inspector();
 		inspector.setDni(dni);
 		var i = inspectorService.encontrarInspector(inspector);
-		if(i == null) {
-			FieldError error = new FieldError("inspeccion", "dniInspector", "No existe ningún inspector con ese DNI.");
-			errores.addError(error);
-		}
 		if(dni.length()>8 || dni.length()<7) {
 			FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser 7 como minimo y 8 como maximo.");
 			errores.addError(error);
 		}
-		try {
-			dniAux = Integer.parseInt(dni);
-			if (dniAux == 0) {
-				FieldError error = new FieldError("inspeccion", "dniInspector", "El dni de la persona no puede ser 0.");
+		else {
+			try {
+				dniAux = Integer.parseInt(dni);
+				if (dniAux == 0) {
+					FieldError error = new FieldError("inspeccion", "dniInspector", "El dni de la persona no puede ser 0.");
+					errores.addError(error);
+				}
+				else if(i == null) {
+					FieldError error = new FieldError("inspeccion", "dniInspector", "No existe ningún inspector con ese DNI.");
+					errores.addError(error);
+				}
+			}
+			catch (NumberFormatException e) {
+				FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser numeros.");
 				errores.addError(error);
 			}
 		}
-		catch (NumberFormatException e) {
-			FieldError error = new FieldError("inspeccion", "dniInspector", "Los caracteres del dni deben ser numeros.");
-			errores.addError(error);
-		}
 		
 		if(errores.hasErrors()) {
-			return "modificarInspeccion";
+			return "inspecciones/modificarInspeccion";
 		}
 		inspeccionService.guardar(inspeccion);
-		return "redirect:/";
+		return "redirect:/inspeccion/";
 	}
 	
 	@GetMapping("/eliminar/{numero}")
 	public String eliminarInspeccion(Inspeccion inspeccion, Model model) {
-		inspeccion = inspeccionService.encontrarInspeccion(inspeccion);
+		inspeccion = inspeccionService.encontrarInspeccion(inspeccion.getNumero());
 		model.addAttribute("inspeccion", inspeccion);
-		return "borrarInspeccion";
+		return "inspecciones/borrarInspeccion";
 	}
 	
 	@PostMapping("/borrar")
 	public String borrarInspeccion(Inspeccion inspeccion) {
 		inspeccionService.eliminar(inspeccion);
-		return "redirect:/";
+		return "redirect:/inspeccion/";
 	}
 }

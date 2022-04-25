@@ -31,7 +31,7 @@ public class PropietarioService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Propietario encontrarPropietario(Propietario propietario) {
-		return propietarioDao.findById(propietario.getDni()).orElse(null);
+	public Propietario encontrarPropietario(String dni) {
+		return propietarioDao.findById(dni).orElse(null);
 	}
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Automóviles</title>
+</head>
+<body>
+	<h1>Automóviles</h1>
+	<a th:href="@{/automovil/agregar}">Crear automóvil</a>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<h4>Automóviles:</h4>
+	<div th:if="${autos != null and !autos.empty}">
+		<table border=1>
+			<tr>
+				<th>Dominio</th>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>Tipo</th>
+				<th>DNI propietario</th>
+				<th>Estado inspección</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="auto : ${autos}">
+				<td th:text="${auto.dominio}">Mostrar dominio</td>
+				<td th:text="${auto.tipo.modelo.marca.nombreMarca}">Mostrar marca</td>
+				<td th:text="${auto.tipo.modelo.nombreModelo}">Mostrar modelo</td>
+				<td th:text="${auto.tipo.nombreTipo}">Mostrar tipo</td>
+				<td th:text="${auto.dniPropietario}">Mostrar DNI propietario</td>
+				<td th:text="${auto.estadoInspeccion}">Mostrar estado inspeccion</td>
+				<td><a th:href="@{/automovil/editar/} + ${auto.dominio}">Editar</a></td>
+				<td><a th:href="@{/automovil/eliminar/} + ${auto.dominio}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${autos == null or autos.empty}">
+	La lista de autos esta vacia.
+	</div>
+</body>
+</html>

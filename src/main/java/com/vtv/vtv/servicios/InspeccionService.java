@@ -32,7 +32,7 @@ public class InspeccionService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Inspeccion encontrarInspeccion(Inspeccion inspeccion) {
-		return inspeccionDao.findById(inspeccion.getNumero()).orElse(null);
+	public Inspeccion encontrarInspeccion(int numero) {
+		return inspeccionDao.findById(numero).orElse(null);
 	}
 }

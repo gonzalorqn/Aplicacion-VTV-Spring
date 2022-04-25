@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Modificar inspección</title>
+</head>
+<body>
+	<h1>Modificar inspección</h1>
+	<a th:href="@{/inspeccion/}">Volver</a>
+	<br/>
+	<br/>
+	<form th:action="@{/inspeccion/modificar}" method="post" th:object="${inspeccion}">
+		<input type="hidden" id="numero" name="numero" th:field="*{numero}"/>
+		<input type="hidden" name="dominio" th:field="*{dominio}"/>
+		<label for="dominio">Dominio:</label>
+		<input type="text" id="dominio" name="dominio" th:field="*{dominio}" disabled="true"/>
+		<br/>
+		<label for="dniInspector">DNI inspector:</label>
+		<input type="text" id="dniInspector" name="dniInspector" th:field="*{dniInspector}"/>
+		<span th:if="${#fields.hasErrors('dniInspector')}" th:errors="*{dniInspector}">Error DNI inspector</span>
+		<br/>
+		<label for="estado">Estado:</label>
+		<select name="estado" id="estado" th:field="*{estado}">
+			<option value="apto">Apto</option>
+			<option value="condicional">Condicional</option>
+			<option value="rechazado">Rechazado</option>
+		</select>
+		<br/>
+		<label for="fecha">Fecha:</label>
+		<input type="date" id="fecha" name="fecha" th:field="*{fecha}"/>
+		<span th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">Error fecha</span>
+		<br/>
+		<br/>
+		<input type="submit" name="modificar" value="Modificar"/>
+	</form>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Inspecciones</title>
+</head>
+<body>
+	<h1>Inspecciones</h1>
+	<a th:href="@{/inspeccion/agregar}">Crear inspección</a>
+	<a th:href="@{/}">Volver</a>
+	<br/>
+	<br/>
+	<h4>Inspecciones:</h4>
+	<div th:if="${inspecciones != null and !inspecciones.empty}">
+		<table border="1">
+			<tr>
+				<th>Número</th>
+				<th>Dominio</th>
+				<th>DNI inspector</th>
+				<th>Estado</th>
+				<th>Fecha</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="inspeccion : ${inspecciones}">
+				<td th:text="${inspeccion.numero}">Mostrar numero</td>
+				<td th:text="${inspeccion.dominio}">Mostrar dominio</td>
+				<td th:text="${inspeccion.dniInspector}">Mostrar DNI inspector</td>
+				<td th:text="${inspeccion.estado}">Mostrar estado</td>
+				<td th:text="${inspeccion.fecha}">Mostrar fecha</td>
+				<td><a th:href="@{/inspeccion/editar/} + ${inspeccion.numero}">Editar</a></td>
+				<td><a th:href="@{/inspeccion/eliminar/} + ${inspeccion.numero}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${inspecciones == null or inspecciones.empty}">
+	La lista de inspecciones esta vacia.
+	</div>
+</body>
+</html>

@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Agregar propietario</title>
+<title>Agregar inspector</title>
 </head>
 <body>
-	<h1>Agregar propietario</h1>
-	<a th:href="@{/}">Volver</a>
+	<h1>Agregar inspector</h1>
+	<a th:href="@{/inspector/}">Volver</a>
 	<br>
 	<br>
-	<form th:action="@{/propietario/guardar}" method="post" th:object="${propietario}">
+	<form th:action="@{/inspector/guardar}" method="post" th:object="${inspector}">
 		<label for="nombre">Nombre:</label>
 		<input type="text" name="nombre" th:field="*{nombre}">
 		<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error nombre</span>
@@ -22,8 +22,13 @@
 		<input type="text" name="dni" th:field="*{dni}">
 		<span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Error DNI</span>
 		<br>
-		<label for="exento">Exento:</label>
-		<input type="checkbox" name="exento" th:field="*{exento}">
+		<label for="numero">Número:</label>
+		<input type="number" name="numero" th:field="*{numero}">
+		<span th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}">Error numero</span>
+		<br>
+		<label for="salario">Salario:</label>
+		<input type="number" name="salario" th:field="*{salario}">
+		<span th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}">Error salario</span>
 		<br>
 		<br>
 		<input type="submit" name="guardar" value="Guardar">

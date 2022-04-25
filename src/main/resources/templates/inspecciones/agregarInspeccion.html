@@ -2,18 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Modificar inspección</title>
+<title>Agregar inspección</title>
 </head>
 <body>
-	<h1>Modificar inspección</h1>
-	<a th:href="@{/}">Volver</a>
+	<h1>Agregar inspección</h1>
+	<a th:href="@{/inspeccion/}">Volver</a>
 	<br>
 	<br>
-	<form th:action="@{/inspeccion/modificar}" method="post" th:object="${inspeccion}">
-		<input type="hidden" name="numero" th:field="*{numero}">
-		<input type="hidden" name="dominio" th:field="*{dominio}">
+	<form th:action="@{/inspeccion/guardar}" method="post" th:object="${inspeccion}">
 		<label for="dominio">Dominio:</label>
-		<input type="text" name="dominio" th:field="*{dominio}" disabled>
+		<input type="text" name="dominio" oninput="this.value = this.value.toUpperCase()" th:field="*{dominio}">
+		<span th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}">Error dominio</span>
 		<br>
 		<label for="dniInspector">DNI inspector:</label>
 		<input type="text" name="dniInspector" th:field="*{dniInspector}">
@@ -31,7 +30,7 @@
 		<span th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">Error fecha</span>
 		<br>
 		<br>
-		<input type="submit" name="modificar" value="Modificar">
+		<input type="submit" name="guardar" value="Guardar">
 	</form>
 </body>
 </html>

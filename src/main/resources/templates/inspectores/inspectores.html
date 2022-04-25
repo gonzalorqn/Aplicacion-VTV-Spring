@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inspectores</title>
+</head>
+<body>
+	<h1>Inspectores</h1>
+	<a th:href="@{/inspector/agregar}">Crear inspector</a>
+	<a th:href="@{/}">Volver</a>
+	<br>
+	<br>
+	<h4>Inspectores:</h4>
+	<div th:if="${inspectores != null and !inspectores.empty}">
+		<table border=1>
+			<tr>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Número</th>
+				<th>Salario</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="inspector : ${inspectores}">
+				<td th:text="${inspector.dni}">Mostrar DNI</td>
+				<td th:text="${inspector.nombre}">Mostrar nombre</td>
+				<td th:text="${inspector.apellido}">Mostrar apellido</td>
+				<td th:text="${inspector.numero}">Mostrar numero</td>
+				<td th:text="${inspector.salario}">Mostrar salario</td>
+				<td><a th:href="@{/inspector/editar/} + ${inspector.dni}">Editar</a></td>
+				<td><a th:href="@{/inspector/eliminar/} + ${inspector.dni}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${inspectores == null or inspectores.empty}">
+	La lista de inspectores esta vacia.
+	</div>
+</body>
+</html>

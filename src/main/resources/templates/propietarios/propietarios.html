@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Propietarios</title>
+</head>
+<body>
+	<h1>Propietarios</h1>
+	<a th:href="@{/propietario/agregar}">Crear propietario</a>
+	<a th:href="@{/}">Volver</a>
+	<br/>
+	<br/>
+	<h4>Propietarios:</h4>
+	<div th:if="${propietarios != null and !propietarios.empty}">
+		<table border="1">
+			<tr>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Exento</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+			<tr th:each="propietario : ${propietarios}">
+				<td th:text="${propietario.dni}">Mostrar DNI</td>
+				<td th:text="${propietario.nombre}">Mostrar nombre</td>
+				<td th:text="${propietario.apellido}">Mostrar apellido</td>
+				<td th:text="${propietario.exento}">Mostrar exento</td>
+				<td><a th:href="@{/propietario/editar/} + ${propietario.dni}">Editar</a></td>
+				<td><a th:href="@{/propietario/eliminar/} + ${propietario.dni}">Eliminar</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:if="${propietarios == null or propietarios.empty}">
+	La lista de propietarios esta vacia.
+	</div>
+</body>
+</html>

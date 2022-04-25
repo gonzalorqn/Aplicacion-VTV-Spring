@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Agregar inspector</title>
+<title>Modificar inspector</title>
 </head>
 <body>
-	<h1>Agregar inspector</h1>
-	<a th:href="@{/}">Volver</a>
+	<h1>Modificar inspector</h1>
+	<a th:href="@{/inspector/}">Volver</a>
 	<br>
 	<br>
-	<form th:action="@{/inspector/guardar}" method="post" th:object="${inspector}">
+	<form th:action="@{/inspector/modificar}" method="post" th:object="${inspector}">
+		<input type="hidden" name="dni" th:field="*{dni}">
+		<input type="hidden" name="numero" th:field="*{numero}">
 		<label for="nombre">Nombre:</label>
 		<input type="text" name="nombre" th:field="*{nombre}">
 		<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error nombre</span>
@@ -19,19 +21,17 @@
 		<span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error apellido</span>
 		<br>
 		<label for="dni">DNI:</label>
-		<input type="text" name="dni" th:field="*{dni}">
-		<span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Error DNI</span>
+		<input type="text" name="dni" th:field="*{dni}" disabled>
 		<br>
 		<label for="numero">Número:</label>
-		<input type="number" name="numero" th:field="*{numero}">
-		<span th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}">Error numero</span>
+		<input type="number" name="numero" th:field="*{numero}" disabled>
 		<br>
 		<label for="salario">Salario:</label>
 		<input type="number" name="salario" th:field="*{salario}">
 		<span th:if="${#fields.hasErrors('salario')}" th:errors="*{salario}">Error salario</span>
 		<br>
 		<br>
-		<input type="submit" name="guardar" value="Guardar">
+		<input type="submit" name="modificar" value="Modificar">
 	</form>
 </body>
 </html>

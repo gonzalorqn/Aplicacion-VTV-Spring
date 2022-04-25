@@ -6,12 +6,12 @@
 </head>
 <body>
 	<h1>Agregar automóvil</h1>
-	<a th:href="@{/}">Volver</a>
+	<a th:href="@{/automovil/}">Volver</a>
 	<br>
 	<br>
 	<form th:action="@{/automovil/guardar}" method="post" th:object="${automovil}">
 		<label for="dominio">Dominio:</label>
-		<input type="text" name="dominio" th:field="*{dominio}">
+		<input type="text" name="dominio" oninput="this.value = this.value.toUpperCase()" th:field="*{dominio}">
 		<span th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}">Error dominio</span>
 		<br>
 		<label for="marca">Marca:</label>
